@@ -14,6 +14,13 @@
         font-weight: 400;
         letter-spacing: 1px;
     }
+    /* font media contact */
+    .contacts__box-inner h2:nth-child(1) {
+        font-size: 28px;
+    }
+    .contacts__box-inner h2:nth-child(2), .contacts__box-inner h2:nth-child(3) {
+        font-size: 24px;
+    }
     /* footer */
     .footer__heading h1 {
         font-size: 48px;
@@ -23,7 +30,7 @@
         font-size: 26px;
         font-weight: 400;
     }
-    /* media restourant and courier*/
+    /* media restourant*/
     .main__form-heading h2 {
         font-size: 32px;
         font-weight: 600;
@@ -33,5 +40,32 @@
     }
     .main__form-input-file h3 {
         font-size: 24px;
+    }
+    /* font media about */
+    .header__box-users h2 {
+        font-size: 36px;
+    }
+    .header__box-restaurants h2 {
+        font-size: 36px;
+    }
+    .about__heading h1 {
+        font-size: 42px;
+    }
+    .about__box h2 {
+        font-size: 28px;
+    }
+    .users__heading h1 {
+        font-size: 42px;
+    }
+    .restaurants__heading h1 {
+        font-size: 42px;
+    }
+    .users__text-box h2 {
+        font-size: 30px;
+        line-height: 42px;
+    }
+    .restaurants__text h2 {
+        font-size: 30px;
+        line-height: 42px;
     }
 }

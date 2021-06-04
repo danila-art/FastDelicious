@@ -1,0 +1,198 @@
+.header {
+    background-image: url('../img/background/background-about.jpg');
+}
+
+.header__flex-box {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.header__content {
+    width: auto;
+}
+
+.header__box-users-container {
+    display: block;
+    overflow: hidden;
+    width: 40%;
+    height: 60vh;
+    margin-top: 10%;
+    border-radius: 10px;
+}
+
+.header__box-restaurants-container {
+    display: block;
+    overflow: hidden;
+    width: 40%;
+    height: 60vh;
+    margin-top: 10%;
+    border-radius: 10px;
+}
+
+.header__box-users {
+    display: flex;
+    background-image: url('../img/background/box-about/ginger-millennial-guy-uses-cell-phone-application-synchronizing-data-has-serious-look-wears-round-spectacles_273609-29740.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    transition: .5s ease-in-out;
+    border-radius: 10px;
+}
+
+.header__box-restaurants {
+    display: flex;
+    background-image: url('../img/background/box-about/top-view-wooden-cutting-board-with-mock-up_35913-1896.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    transition: .5s ease-in-out;
+    border-radius: 10px;
+}
+
+.header__box-users h2 {
+    color: white;
+    margin: auto;
+}
+
+.header__box-restaurants h2 {
+    color: white;
+    margin: auto;
+}
+
+.header__box-users:hover, .header__box-restaurants:hover {
+    transform: scale(1.2);
+    transition: .5s ease-in-out;
+}
+
+.about {
+    display: block;
+    background-image: url('../img/background/backgorund_main.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+    padding-top: 10%;
+}
+
+.about__heading {
+    display: block;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.users {
+    display: block;
+    background-image: url('../img/background/box-about/ginger-millennial-guy-uses-cell-phone-application-synchronizing-data-has-serious-look-wears-round-spectacles_273609-29740.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100vh;
+}
+
+.users__heading {
+    display: block;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    color: white;
+}
+
+.restaurants {
+    display: block;
+    background-image: url('../img/background/backgorund_main.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.restaurants__heading {
+    display: block;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.about__flex-box {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 90%;
+    height: auto;
+    margin: 1% auto;
+    align-items: center;
+}
+
+.about__box {
+    display: block;
+    width: 40%;
+    height: auto;
+}
+
+.about__box img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.users__text-box {
+    display: block;
+    width: 40%;
+    height: auto;
+    margin-left: auto;
+    margin-right: 5%;
+    padding-top: 10%;
+    padding-bottom: 2%;
+    text-align: center;
+    color: white;
+}
+
+.restaurants__flex {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 90%;
+    height: auto;
+    margin: 1% auto;
+    align-items: center;
+}
+
+.restaurants__text {
+    display: block;
+    width: 40%;
+    height: auto;
+}
+
+.restaurants__img {
+    display: block;
+    width: 40%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.restaurants__img img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
