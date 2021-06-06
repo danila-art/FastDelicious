@@ -16,6 +16,7 @@ if (!empty($_POST['email'])) {
 }
 if (!empty($_POST['password'])) {
     $password = $_POST['password'];
+    $passwordUser = md5($password);
 } else {
     $password = null;
 }
@@ -24,7 +25,13 @@ if ($FIO != null && $login != null && $email != null && $password != null) {
     $result = $connect->query("SELECT * FROM `user` WHERE `login` = '$login'");
     $count = mysqli_num_rows($result);
     if ($count == 0) {
-        $connect->query("INSERT INTO `user`(`fio`, `login`, `email`, `password`, `rank`) VALUES ('$FIO','$login','$email','$password','user')");
+        $id_user = '';
+        $connect->query("INSERT INTO `user`(`fio`, `login`, `email`, `password`, `rank`) VALUES ('$FIO','$login','$email','$passwordUser','user')");
+        $userResult = $connect->query("SELECT * FROM `user` WHERE `login` = '$login' and `password` = '$passwordUser'");
+        while ($userOut = mysqli_fetch_assoc($userResult)) {
+            $id_user = $userOut['id_user'];
+        }
+        $connect->query("INSERT INTO `user_img`(`id_user`, `user_img`) VALUES ('$id_user','')");
         echo "<!DOCTYPE html>
 <html lang=\"en\">
 

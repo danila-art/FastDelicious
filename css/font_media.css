@@ -1,7 +1,7 @@
 @media screen and (max-width: 1920px) {}
 
 @media screen and (max-width: 1366px) {
-    /* header */
+    /* !header */
     .header__nav h2 {
         font-size: 26px;
         font-weight: 600;
@@ -14,14 +14,14 @@
         font-weight: 400;
         letter-spacing: 1px;
     }
-    /* font media contact */
+    /* !font media contact */
     .contacts__box-inner h2:nth-child(1) {
         font-size: 28px;
     }
     .contacts__box-inner h2:nth-child(2), .contacts__box-inner h2:nth-child(3) {
         font-size: 24px;
     }
-    /* footer */
+    /* !footer */
     .footer__heading h1 {
         font-size: 48px;
         font-weight: 400;
@@ -30,7 +30,7 @@
         font-size: 26px;
         font-weight: 400;
     }
-    /* media restourant*/
+    /* !media restourant*/
     .main__form-heading h2 {
         font-size: 32px;
         font-weight: 600;
@@ -41,7 +41,7 @@
     .main__form-input-file h3 {
         font-size: 24px;
     }
-    /* font media about */
+    /* !font media about */
     .header__box-users h2 {
         font-size: 36px;
     }
@@ -67,5 +67,22 @@
     .restaurants__text h2 {
         font-size: 30px;
         line-height: 42px;
+    }
+    /* !main output restaurants */
+    .main__restorants-box-name h1 {
+        font-size: 36px;
+    }
+    .main__restorants-box-category h2 {
+        font-size: 22px;
+    }
+    /* media->user-page */
+    .user-data__heading {
+        font-size: 28px;
+    }
+    .user-data__data-box h2:nth-child(1) {
+        font-size: 24px;
+    }
+    .user-data__data-box h2:nth-child(2) {
+        font-size: 26px;
     }
 }

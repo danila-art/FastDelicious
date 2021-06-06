@@ -8,6 +8,7 @@
     <title>Fast Delicious - О нас</title>
     <link rel="stylesheet" href="../css/main_style.css">
     <link rel="shortcut icon" href="../img/logo/logo_1-1.png">
+    <link rel="stylesheet" href="../css/registration_autorization_style.css">
     <!-- style this page -->
     <link rel="stylesheet" href="../css/about_style.css">
     <!-- font-media -->
@@ -124,13 +125,33 @@
                     <h2><a href="../">Главная</a></h2>
                     <h2><a href="restaurants.php">Ресторанам</a></h2>
                     <h2><a href="about.php">О нас</a></h2>
-                    <h2><a href="">Контакты</a></h2>
+                    <h2 id="buttonContact">Контакты</h2>
                 </div>
-                <div class="header__user">
-                    <div class="header__user-img">
-                        <img src="../img/icons/user.png" alt="errorUpImage">
-                    </div>
-                </div>
+                <?php
+                if (!empty($_COOKIE['loginUser'])) {
+                    $cookieLoginUser = $_COOKIE['loginUser'];
+                    $loginUser = '';
+                    require_once '../php/connection.php';
+                    $resultUser = $connect->query("SELECT * FROM `user` WHERE `login` = '$cookieLoginUser '");
+                    while ($outLogin = mysqli_fetch_assoc($resultUser)) {
+                        $loginUser = $outLogin['login'];
+                    }
+                    echo "<div class=\"header__user\ id=\"clickUserPage\">
+            <div class=\"header__user-img\">
+                <img src=\"../img/icons/user.png\" alt=\"errorUpImage\">
+            </div>
+            <div class=\"header__user-name\">
+                <h2>$loginUser</h2>
+            </div>
+        </div>";
+                } else {
+                    echo "<div class=\"header__user\">
+            <div class=\"header__user-img\" id=\"userBlock\">
+                <img src=\"../img/icons/user.png\" alt=\"errorUpImage\">
+            </div>
+        </div>";
+                }
+                ?>
             </div>
         </div>
         <div class="header__content">
@@ -229,7 +250,7 @@
             }
         });
     </script>
-    <script src="js/script_registr_autorization.js"></script>
+    <script src="../js/script_registr_autorization.js"></script>
 </body>
 
 </html>

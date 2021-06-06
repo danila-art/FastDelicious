@@ -126,11 +126,34 @@
                     <h2><a href="page/about.php">О нас</a></h2>
                     <h2 id="buttonContact">Контакты</h2>
                 </div>
-                <div class="header__user">
-                    <div class="header__user-img" id="userBlock">
-                        <img src="img/icons/user.png" alt="errorUpImage">
-                    </div>
-                </div>
+                <?php
+                if (!empty($_COOKIE['loginUser'])) {
+                    $cookieLoginUser = $_COOKIE['loginUser'];
+                    $loginUser = '';
+                    require_once 'php/connection.php';
+                    $resultUser = $connect->query("SELECT * FROM `user` WHERE `login` = '$cookieLoginUser '");
+                    while ($outLogin = mysqli_fetch_assoc($resultUser)) {
+                        $loginUser = $outLogin['login'];
+                    }
+                    echo "<div class=\"header__user\" id=\"clickUserPage\">
+            <div class=\"header__user-img\">
+                <img src=\"img/icons/user.png\" alt=\"errorUpImage\">
+            </div>
+            <div class=\"header__user-name\">
+                <h2>$loginUser</h2>
+            </div>
+            <div class=\"header__user-exit\">
+                <h2><a href=\"php/exit_user.php\">Выйти</a></h2>
+            </div>
+        </div>";
+                } else {
+                    echo "<div class=\"header__user\">
+            <div class=\"header__user-img\" id=\"userBlock\">
+                <img src=\"img/icons/user.png\" alt=\"errorUpImage\">
+            </div>
+        </div>";
+                }
+                ?>
             </div>
         </div>
         <div class="header__content">
@@ -154,10 +177,44 @@
     </header>
     <section class="main">
         <div class="main__restourant-category">
-            <!-- После добавления ресторанов -->
+            <div class="main__nav">
+                <div class="main__nav-flex">
+                    <div class="main__h2">
+                        <h2 id="mainAll">Все</h2>
+                    </div>
+                    <?php
+                    require_once 'php/connection.php';
+                    $resultCategory = $connect->query("SELECT DISTINCT(`category`) FROM `restourants`");
+                    while ($categoryOutPut = mysqli_fetch_assoc($resultCategory)) {
+                        echo "<div class=\"main__h2\">
+                                <h2 data-category=\"{$categoryOutPut['category']}\">{$categoryOutPut['category']}</h2>
+                            </div>";
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
         <div class="main__restorants">
-            <!-- тут будут отображаться блоки с ресторанами -->
+            <?php
+            require_once 'php/connection.php';
+            $resultRest = $connect->query("SELECT `restourants`.`id_restourant`, `restourants`.`name`, `restourants`.`category`, `restourants_img`.`restaurant_img` FROM `restourants` INNER JOIN `restourants_img` ON `restourants`.`id_restourant` = `restourants_img`.`id_restourant`");
+            while ($restOut = mysqli_fetch_assoc($resultRest)) {
+                $restImg = base64_encode($restOut['restaurant_img']);
+                echo "<div class=\"main__restorants-box\">
+                        <form action=\"\" method=\"post\" class=\"form-rest\">
+                            <div class=\"main__restorants-box-img\">
+                                <img src=\"data:image/jpg;base64,$restImg\" alt=\"errorUpImage\">
+                            </div>
+                            <div class=\"main__restorants-box-name\">
+                                <h1>{$restOut['name']}</h1>
+                            </div>
+                            <div class=\"main__restorants-box-category\" data-boxCategory=\"{$restOut['category']}\">
+                                <h2>Категория: {$restOut['category']}</h2>
+                            </div>
+                        </form>
+                    </div>";
+            }
+            ?>
         </div>
     </section>
     <footer class="footer">
@@ -187,8 +244,19 @@
                 });
             }
         });
+        // user-active
+        if (document.getElementById('clickUserPage') != null) {
+            document.getElementById('clickUserPage').addEventListener('click', () => {
+                window.location.href = 'page/user_page.php';
+            });
+        }
     </script>
-    <script src="js/script_registr_autorization.js"></script>
+    <?php
+    if (empty($_COOKIE['loginUser'])) {
+        echo "<script src=\"js/script_registr_autorization.js\"></script>";
+    }
+    ?>
+
 </body>
 
 </html>

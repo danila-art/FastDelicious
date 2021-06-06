@@ -74,6 +74,6 @@ formInnerRestourant.addEventListener('submit', (e) => {
         }
     });
     if (arrErrorInner.length == 0) {
-        // formInnerRestourant.submit();
+        formInnerRestourant.submit();
     }
 });
