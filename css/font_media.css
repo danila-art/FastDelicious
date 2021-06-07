@@ -1,6 +1,9 @@
 @media screen and (max-width: 1920px) {}
 
 @media screen and (max-width: 1366px) {
+    input[type=submit] {
+        font-size: 26px;
+    }
     /* !header */
     .header__nav h2 {
         font-size: 26px;
@@ -75,7 +78,7 @@
     .main__restorants-box-category h2 {
         font-size: 22px;
     }
-    /* media->user-page */
+    /* !media->user-page */
     .user-data__heading {
         font-size: 28px;
     }
@@ -84,5 +87,42 @@
     }
     .user-data__data-box h2:nth-child(2) {
         font-size: 26px;
+    }
+    .user-box__heading h2 {
+        font-size: 32px;
+    }
+    .rest-box__heading h1 {
+        font-size: 42px;
+    }
+    .box-goods__heading h1 {
+        font-size: 26px;
+    }
+    .box-goods__price h2 {
+        font-size: 22px;
+    }
+    .box-goods__total-price h2 {
+        font-size: 22px;
+    }
+    /* !page->goods */
+    .restaurant-container__name-restaurant h1 {
+        font-size: 48px;
+    }
+    .restaurant-container__description h2 {
+        font-size: 30px;
+    }
+    .restaurant-container__category h2 {
+        font-size: 28px;
+    }
+    .goods__heading h1 {
+        font-size: 42px;
+    }
+    .goods_description h2 {
+        font-size: 22px;
+    }
+    .goods__category h2 {
+        font-size: 18px;
+    }
+    .goods__price h2 {
+        font-size: 22px;
     }
 }

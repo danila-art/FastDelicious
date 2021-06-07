@@ -130,26 +130,43 @@
                 <?php
                 if (!empty($_COOKIE['loginUser'])) {
                     $cookieLoginUser = $_COOKIE['loginUser'];
+                    $id_user = '';
                     $loginUser = '';
                     require_once '../php/connection.php';
                     $resultUser = $connect->query("SELECT * FROM `user` WHERE `login` = '$cookieLoginUser '");
                     while ($outLogin = mysqli_fetch_assoc($resultUser)) {
                         $loginUser = $outLogin['login'];
+                        $id_user = $outLogin['id_user'];
                     }
-                    echo "<div class=\"header__user\ id=\"clickUserPage\">
-            <div class=\"header__user-img\">
-                <img src=\"../img/icons/user.png\" alt=\"errorUpImage\">
-            </div>
-            <div class=\"header__user-name\">
-                <h2>$loginUser</h2>
-            </div>
-        </div>";
+                    $imgUseHeaderResult = $connect->query("SELECT `user_img`.`user_img` FROM `user` INNER JOIN `user_img` ON `user`.`id_user` = `user_img`.`id_user` AND `user`.`id_user` = '$id_user'");
+                    $headerUserImgTeg = '';
+                    while ($headerUserImg = mysqli_fetch_assoc($imgUseHeaderResult)) {
+                        if (!empty($headerUserImg['user_img'])) {
+                            $headerUserImgbase64 = base64_encode($headerUserImg['user_img']);
+                            $headerUserImgTeg = "<div class=\"header__user-img user-active\"  id=\"clickUserPage\">
+                                <img src=\"data:image/jpeg;base64,$headerUserImgbase64\" alt=\"errorUpImage\">
+                            </div>";
+                        } else {
+                            $headerUserImgTeg = "<div class=\"header__user-img\" id=\"clickUserPage\">
+                            <img src=\"../img/icons/user.png\" alt=\"errorUpImage\">
+                            </div>";
+                        }
+                    }
+                    echo "<div class=\"header__user\">
+                                $headerUserImgTeg
+                            <div class=\"header__user-name\">
+                                <h2>$loginUser</h2>
+                            </div>
+                            <div class=\"header__user-exit\">
+                                <h2><a href=\"../php/exit_user.php\">Выйти</a></h2>
+                            </div>
+                        </div>";
                 } else {
                     echo "<div class=\"header__user\">
-            <div class=\"header__user-img\" id=\"userBlock\">
-                <img src=\"../img/icons/user.png\" alt=\"errorUpImage\">
-            </div>
-        </div>";
+                            <div class=\"header__user-img\" id=\"userBlock\">
+                                <img src=\"../img/icons/user.png\" alt=\"errorUpImage\">
+                            </div>
+                        </div>";
                 }
                 ?>
             </div>
@@ -249,6 +266,12 @@
                 });
             }
         });
+        // user-active
+        if (document.getElementById('clickUserPage') != null) {
+            document.getElementById('clickUserPage').addEventListener('click', () => {
+                window.location.href = '../page/user_page.php';
+            });
+        }
     </script>
     <script src="../js/script_registr_autorization.js"></script>
 </body>

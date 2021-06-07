@@ -129,29 +129,43 @@
                 <?php
                 if (!empty($_COOKIE['loginUser'])) {
                     $cookieLoginUser = $_COOKIE['loginUser'];
+                    $id_user = '';
                     $loginUser = '';
                     require_once 'php/connection.php';
                     $resultUser = $connect->query("SELECT * FROM `user` WHERE `login` = '$cookieLoginUser '");
                     while ($outLogin = mysqli_fetch_assoc($resultUser)) {
                         $loginUser = $outLogin['login'];
+                        $id_user = $outLogin['id_user'];
                     }
-                    echo "<div class=\"header__user\" id=\"clickUserPage\">
-            <div class=\"header__user-img\">
-                <img src=\"img/icons/user.png\" alt=\"errorUpImage\">
-            </div>
-            <div class=\"header__user-name\">
-                <h2>$loginUser</h2>
-            </div>
-            <div class=\"header__user-exit\">
-                <h2><a href=\"php/exit_user.php\">Выйти</a></h2>
-            </div>
-        </div>";
+                    $imgUseHeaderResult = $connect->query("SELECT `user_img`.`user_img` FROM `user` INNER JOIN `user_img` ON `user`.`id_user` = `user_img`.`id_user` AND `user`.`id_user` = '$id_user'");
+                    $headerUserImgTeg = '';
+                    while ($headerUserImg = mysqli_fetch_assoc($imgUseHeaderResult)) {
+                        if (!empty($headerUserImg['user_img'])) {
+                            $headerUserImgbase64 = base64_encode($headerUserImg['user_img']);
+                            $headerUserImgTeg = "<div class=\"header__user-img user-active\"  id=\"clickUserPage\">
+                                <img src=\"data:image/jpeg;base64,$headerUserImgbase64\" alt=\"errorUpImage\">
+                            </div>";
+                        } else {
+                            $headerUserImgTeg = "<div class=\"header__user-img\" id=\"clickUserPage\">
+                            <img src=\"img/icons/user.png\" alt=\"errorUpImage\">
+                            </div>";
+                        }
+                    }
+                    echo "<div class=\"header__user\">
+                                $headerUserImgTeg
+                            <div class=\"header__user-name\">
+                                <h2>$loginUser</h2>
+                            </div>
+                            <div class=\"header__user-exit\">
+                                <h2><a href=\"php/exit_user.php\">Выйти</a></h2>
+                            </div>
+                        </div>";
                 } else {
                     echo "<div class=\"header__user\">
-            <div class=\"header__user-img\" id=\"userBlock\">
-                <img src=\"img/icons/user.png\" alt=\"errorUpImage\">
-            </div>
-        </div>";
+                            <div class=\"header__user-img\" id=\"userBlock\">
+                                <img src=\"img/icons/user.png\" alt=\"errorUpImage\">
+                            </div>
+                        </div>";
                 }
                 ?>
             </div>
@@ -166,9 +180,6 @@
             <div class="header__h2">
                 <h2>Если вы являетесь рестораном и хотите сотрудничать, то перейдите во вкладку ресторанам,
                     зарегистрируйте свой профиль и добавляйте товары.</h2>
-            </div>
-            <div class="header__h2">
-                <h2>Если вы ищите работу, то перейдите во вкладку курьерам и зарегистрируйте себя в системе</h2>
             </div>
             <div class="header__h2">
                 <h2>Или же просто желаете вкусно покушать, то листайте ниже.</h2>
@@ -201,7 +212,8 @@
             while ($restOut = mysqli_fetch_assoc($resultRest)) {
                 $restImg = base64_encode($restOut['restaurant_img']);
                 echo "<div class=\"main__restorants-box\">
-                        <form action=\"\" method=\"post\" class=\"form-rest\">
+                        <form action=\"page/goods_page.php\" method=\"post\" class=\"form-rest\">
+                            <input type=\"hidden\" name=\"id_rest\" value=\"{$restOut['id_restourant']}\">
                             <div class=\"main__restorants-box-img\">
                                 <img src=\"data:image/jpg;base64,$restImg\" alt=\"errorUpImage\">
                             </div>
@@ -250,6 +262,13 @@
                 window.location.href = 'page/user_page.php';
             });
         }
+        // box-restaurant click script
+        const formCollection = document.querySelectorAll('.main__restorants-box');
+        formCollection.forEach((formElem) => {
+            formElem.addEventListener('click', () => {
+                formElem.querySelector('.form-rest').submit();
+            });
+        });
     </script>
     <?php
     if (empty($_COOKIE['loginUser'])) {
