@@ -127,6 +127,9 @@
                     <h2><a href="about.php">О нас</a></h2>
                     <h2 id="buttonContact">Контакты</h2>
                 </div>
+                <div class="header__basket">
+                    <img src="../img/icons/2849824-basket-buy-market-multimedia-shop-shopping-store_107977.png" alt="errorUpImage">
+                </div>
                 <?php
                 if (!empty($_COOKIE['loginUser'])) {
                     $cookieLoginUser = $_COOKIE['loginUser'];
@@ -272,6 +275,16 @@
                 window.location.href = '../page/user_page.php';
             });
         }
+        // go to basket
+        const buttonBasket = document.querySelector('.header__basket');
+        buttonBasket.addEventListener('click', () => {
+            if (document.getElementById('clickUserPage') != null) {
+                window.location.href = 'user_basket.php';
+            } else {
+                moduleAutoRegistr.style.display = 'block';
+                blockModuleAutorization.style.display = 'block';
+            }
+        });
     </script>
     <script src="../js/script_registr_autorization.js"></script>
 </body>

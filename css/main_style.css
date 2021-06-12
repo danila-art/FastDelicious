@@ -60,7 +60,7 @@ h2, h3, h4, input[type=submit] {
 
 .header__fixed-block {
     display: block;
-    position: fixed;
+    position: relative;
     background-color: rgba(255, 255, 255, 1);
     width: 100%;
     height: auto;
@@ -78,6 +78,18 @@ h2, h3, h4, input[type=submit] {
     height: auto;
     margin: 0 auto;
     align-items: center;
+}
+
+.header__basket {
+    display: block;
+    width: 8%;
+    height: 8%;
+    cursor: pointer;
+}
+
+.header__basket img {
+    width: 100%;
+    height: auto;
 }
 
 .header__logo {
@@ -153,7 +165,7 @@ h2, h3, h4, input[type=submit] {
     width: 60%;
     height: auto;
     margin-left: 5%;
-    padding-top: 15%;
+    padding-top: 2%;
 }
 
 .header__heading {

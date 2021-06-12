@@ -69,9 +69,12 @@ if (empty($_COOKIE['loginUser'])) {
                 </div>
                 <div class="header__nav">
                     <h2><a href="../">Главная</a></h2>
-                    <h2><a href="restaurants.php">Ресторанам</a></h2>
+                    <h2><a href="#myAplication">Мои заказы</a></h2>
                     <h2><a href="about.php">О нас</a></h2>
                     <h2 id="buttonContact">Контакты</h2>
+                </div>
+                <div class="header__basket">
+                    <img src="../img/icons/2849824-basket-buy-market-multimedia-shop-shopping-store_107977.png" alt="errorUpImage">
                 </div>
                 <?php
                 if (!empty($_COOKIE['loginUser'])) {
@@ -162,14 +165,14 @@ if (empty($_COOKIE['loginUser'])) {
     </section>
     <section class="user-box">
         <div class="user-box__heading">
-            <h2>Корзина</h2>
+            <h2>Избранное</h2>
         </div>
         <?php
         require_once '../php/connection.php';
         $resultUserBox = $connect->query("SELECT * FROM `user_box` WHERE `id_user` = '$id_user'");
         if (mysqli_num_rows($resultUserBox) == 0) {
             echo "<div class=\"no-goods\">
-                        <h2>Корзина пуста</h2>                
+                        <h2>У вас нет избранных файлов</h2>                
                     </div>";
         } else {
             echo "<div class=\"box__flex-container\">";
@@ -183,18 +186,27 @@ if (empty($_COOKIE['loginUser'])) {
                 $id_restourant  = $outRest['id_restourant'];
                 $base64ImgRest = base64_encode($outRest['restaurant_img']);
                 echo "<div class=\"rest-box\">
-                        <div class=\"rest-box__heading\">
-                            <h1>{$outRest['name']}</h1>
-                        </div>
-                        <div class=\"rest-box__img\">
-                            <img src=\"data:image/jpeg;base64,$base64ImgRest\" alt=\"errorUpImage\">
-                        </div>
+                        <div class=\"rest-box-container\">
+                            <div class=\"delete-rest-box\">
+                                <form action=\"../php/delete_at_user_box.php\" method=\"post\" class=\"form-delete-rest-box\">
+                                    <input type=\"hidden\" name=\"id_rest\" value=\"$id_restourant\">
+                                    <img class=\"img-delete-icon\" src=\"../img/icons/cancel-white.png\" alt=\"errorUpImage\">
+                                </form>
+                            </div>
+                            <div class=\"rest-box__heading\">
+                                <h1>{$outRest['name']}</h1>
+                            </div>
+                            <div class=\"rest-box__img\">
+                                <img src=\"data:image/jpeg;base64,$base64ImgRest\" alt=\"errorUpImage\">
+                            </div>
                     ";
-                $resultGoods = $connect->query("SELECT `restourants`.`name`, `restourants_img`.`restaurant_img`, `restourants_goods`.`goods_name`,`restourants_goods`.`price`, `restourants_goods_img`.`goods_img` FROM `user_box` INNER JOIN `restourants` ON `restourants`.`id_restourant` = `user_box`.`id_restourant` INNER JOIN `restourants_img` ON `restourants`.`id_restourant` = `restourants_img`.`id_restourant` INNER JOIN `restourants_goods` ON `user_box`.`id_restourant_goods` = `restourants_goods`.`id_restourant_goods` INNER JOIN `restourants_goods_img` ON `restourants_goods`.`id_restourant_goods` = `restourants_goods_img`.`id_restourant_goods` AND `user_box`.`id_user` = '$id_user' AND `restourants`.`id_restourant` = '$id_restourant'");
-                echo "<div class=\"goods__flex-container\">";
+                $resultGoods = $connect->query("SELECT `restourants`.`name`, `restourants_img`.`restaurant_img`, `restourants_goods`.`id_restourant_goods`, `restourants_goods`.`goods_name`,`restourants_goods`.`price`, `restourants_goods_img`.`goods_img` FROM `user_box` INNER JOIN `restourants` ON `restourants`.`id_restourant` = `user_box`.`id_restourant` INNER JOIN `restourants_img` ON `restourants`.`id_restourant` = `restourants_img`.`id_restourant` INNER JOIN `restourants_goods` ON `user_box`.`id_restourant_goods` = `restourants_goods`.`id_restourant_goods` INNER JOIN `restourants_goods_img` ON `restourants_goods`.`id_restourant_goods` = `restourants_goods_img`.`id_restourant_goods` AND `user_box`.`id_user` = '$id_user' AND `restourants`.`id_restourant` = '$id_restourant'");
+                echo "<form action=\"../php/add_busket.php\" method=\"post\" class=\"form-booking\">
+                <div class=\"goods__flex-container\">";
                 while ($outGoods = mysqli_fetch_assoc($resultGoods)) {
                     $goodsImgBase64 = base64_encode($outGoods['goods_img']);
                     echo "<div class=\"box-goods\">
+                            <input type=\"checkbox\" name=\"goods-check[]\" value=\"{$outGoods['id_restourant_goods']}\">                            
                             <div class=\"box-goods__img\">
                                 <div class=\"box-goods__heading\">
                                 <h1>{$outGoods['goods_name']}</h1>
@@ -207,28 +219,23 @@ if (empty($_COOKIE['loginUser'])) {
                         </div>";
                 }
                 echo "</div>
-                    <div class=\"box-goods__total-price\">
-                        <h2 class=\"box-goods__total-price-h2\">Итоговая стоимость: </h2>
-                        <form action=\"\" method=\"post\" class=\"form-booking\">
-                        <input class=\"total-price\" type=\"hidden\" name=\"total_price\" value=\"\">
-                    </div>
-                    <div class=\"form-booking\">
-                            <input type=\"hidden\" name=\"id_rest\" value=\"{$outGoods['id_restourant']}\">
-                            <div class=\"form-booking__input-container\">
-                                <div class=\"form-booking__input-box\">
-                                    <h2>Выберите время, когда привезти вам заказ, учтите доставка от 45 минут</h2>
-                                    <input class=\"form-booking__input\" type=\"time\" name=\"time_end\">
-                                    <h4 style=\"color:red; text-align: center;\"></h4>
-                                </div>
-                            </div>
-                            <input class=\"form-booking__submit\" type=\"submit\" value=\"Заказать\" data-active=\"0\">
-                        </form>
+                        <div class=\"form-booking\">
+                                <input type=\"hidden\" name=\"id_rest\" value=\"{$outRest['id_restourant']}\">
+                                <input class=\"form-booking__submit\" type=\"submit\" value=\"Добавить в корзину\">
+                            </form>
+                        </div>
                     </div>
                 </div>";
             }
             echo "</div>";
         }
         ?>
+    </section>
+    <section class="my-aplication" id="myAplication">
+        <div class="my-aplication__heading">
+            <h2>Мои заказы</h2>
+        </div>
+        
     </section>
     <footer class="footer">
         <div class="footer__logo">
@@ -294,39 +301,39 @@ if (empty($_COOKIE['loginUser'])) {
             }
         });
         // total price
-        const boxCollection = document.querySelectorAll('.rest-box');
-        boxCollection.forEach((elem) => {
-            let totalPrice = 0;
-            const priceCollection = elem.querySelectorAll('.box-goods__price');
-            priceCollection.forEach((price) => {
-                totalPrice += parseInt(price.getAttribute('data-price'));
-            });
-            console.log(totalPrice);
-            elem.querySelector('.box-goods__total-price-h2').innerHTML = 'Итоговая стоимость: ' + totalPrice + ' руб.';
-            elem.querySelector('.total-price').value = totalPrice;
 
-            elem.querySelector('.form-booking').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const formBookingInputContainer = elem.querySelector('.form-booking__input-container');
-                const formBookingInput = elem.querySelector('.form-booking__input');
-                const formBookingSubmit = elem.querySelector('.form-booking__submit');
-                if (formBookingSubmit.getAttribute('data-active') == 0) {
-                    if (getComputedStyle(formBookingInputContainer).display == 'none') {
-                        formBookingInputContainer.style.display = 'block';
-                        formBookingSubmit.dataset.active = 1;
-                    }
-                } else if (formBookingSubmit.getAttribute('data-active') == 1) {
-                    if (formBookingInput.value == '') {
-                        formBookingInput.nextElementSibling.innerHTML = 'Поле пусто';
-                    } else {
-                        const thisDate = new Date;
-                        const thisDay = thisDate.getDate();
-                        const thisHours = thisDate.getHours();
-                        const thisMinutes = thisDate.getMinutes();
-                        console.log(thisDay + '->' + thisHours + ' ' + thisMinutes);
-                        console.log(formBookingInput.value);
-                    }
-                }
+        // <div class = \"box-goods__total-price\"> 
+        //     <h2 class = \"box-goods__total-price-h2\">Итоговая стоимость: </h2> 
+        //     <input class = \"total-price\" type=\"hidden\" name=\"total_price\" value=\"\"> 
+        //     </div>
+        // const boxCollection = document.querySelectorAll('.rest-box');
+        // boxCollection.forEach((elem) => {
+        //     let totalPrice = 0;
+        //     const priceCollection = elem.querySelectorAll('.box-goods__price');
+        //     priceCollection.forEach((price) => {
+        //         totalPrice += parseInt(price.getAttribute('data-price'));
+        //     });
+        //     console.log(totalPrice);
+        //     elem.querySelector('.box-goods__total-price-h2').innerHTML = 'Итоговая стоимость: ' + totalPrice + ' руб.';
+        //     elem.querySelector('.total-price').value = totalPrice;
+        // });
+
+        // go to basket
+        const buttonBasket = document.querySelector('.header__basket');
+        buttonBasket.addEventListener('click', () => {
+            if (document.getElementById('clickUserPage') != null) {
+                window.location.href = 'user_basket.php';
+            } else {
+                moduleAutoRegistr.style.display = 'block';
+                blockModuleAutorization.style.display = 'block';
+            }
+        });
+
+        // form delete-rest
+        const formDeleteRestBox = document.querySelectorAll('.form-delete-rest-box');
+        formDeleteRestBox.forEach((elem)=>{
+            elem.querySelector('.img-delete-icon').addEventListener('click', ()=>{
+                elem.submit();
             });
         });
     </script>

@@ -1,6 +1,4 @@
-.header {
-    background-image: none;
-    background-color: white;
+.header-goods-page {
     height: auto;
 }
 
@@ -26,6 +24,10 @@
     width: 20%;
     height: auto;
     text-align: center;
+}
+
+.category__box h2 {
+    cursor: pointer;
 }
 
 .goods {
@@ -97,7 +99,7 @@
     background-color: rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 90vh;
-    padding-top: 15%;
+    padding-top: 5%;
 }
 
 .restaurant-container__img-box {

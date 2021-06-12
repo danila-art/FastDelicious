@@ -130,7 +130,7 @@ if ($id_rest != null) {
             </form>
         </div>
     </section>
-    <header class="header">
+    <header class="header-goods-page">
         <div class="header__fixed-block">
             <div class="header__flex">
                 <div class="header__logo">
@@ -141,6 +141,9 @@ if ($id_rest != null) {
                     <h2><a href="restaurants.php">Ресторанам</a></h2>
                     <h2><a href="about.php">О нас</a></h2>
                     <h2 id="buttonContact">Контакты</h2>
+                </div>
+                <div class="header__basket">
+                    <img src="../img/icons/2849824-basket-buy-market-multimedia-shop-shopping-store_107977.png" alt="errorUpImage">
                 </div>
                 <?php
                 if (!empty($_COOKIE['loginUser'])) {
@@ -215,9 +218,12 @@ if ($id_rest != null) {
         require_once '../php/connection.php';
         $resultCategoryGoods = $connect->query("SELECT DISTINCT(`restourants_goods`.`goods_category`) FROM `restourants_goods` WHERE `id_restourant` = '$id_rest'");
         echo "<div class=\"category__container\">
-                    <div class=\"category__flex-container\">";
+                    <div class=\"category__flex-container\">
+                    <div class=\"category__box\" id=\"allGoods\">
+                        <h2>Все</h2>
+                    </div>";
         while ($goodsCategory = mysqli_fetch_assoc($resultCategoryGoods)) {
-            echo "<div class=\"category__box\" data-category=\"{$goodsCategory['goods_category']}\">
+            echo "<div class=\"category__box category-goods-button\" data-category=\"{$goodsCategory['goods_category']}\">
                 <h2>{$goodsCategory['goods_category']}</h2>
             </div>";
         }
@@ -246,7 +252,7 @@ if ($id_rest != null) {
                             <img src=\"data:image/jpeg;base64,$imgGoods\" alt=\"errorUpImage\">
                         </div>
                         <div class=\"goods__category\">
-                            <h2>Категория:  {$goods['goods_category']}</h2>
+                            <h2 class=\"goods-category-block\">Категория:  {$goods['goods_category']}</h2>
                         </div>
                         <div class=\"goods__price\">
                         <h2>Цена:   {$goods['price']} руб</h2>
@@ -310,7 +316,18 @@ if ($id_rest != null) {
             });
 
         }
+        // go to basket
+        const buttonBasket = document.querySelector('.header__basket');
+        buttonBasket.addEventListener('click', () => {
+            if (document.getElementById('clickUserPage') != null) {
+                window.location.href = 'user_basket.php';
+            } else {
+                moduleAutoRegistr.style.display = 'block';
+                blockModuleAutorization.style.display = 'block';
+            }
+        });
     </script>
+    <script src="../js/filter.js"></script>
     <?php
     if (empty($_COOKIE['loginUser'])) {
         echo "<script src=\"../js/script_registr_autorization.js\"></script>";
