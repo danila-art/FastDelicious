@@ -109,10 +109,10 @@ if (empty($_COOKIE['loginUser'])) {
         </div>
         <?php
         $resultBasket = $connect->query("SELECT `user_basket`.`id_restourant_goods`, `restourants_goods`.`goods_name`, `restourants_goods`.`goods_category`, `restourants_goods_img`.`goods_img`, `restourants`.`name`, `restourants`.`category`, `restourants_goods`.`price` FROM `user_basket` INNER JOIN `restourants` ON `restourants`.`id_restourant` = `user_basket`.`id_restourant` INNER JOIN `restourants_goods` ON `restourants_goods`.`id_restourant_goods` = `user_basket`.`id_restourant_goods` INNER JOIN `restourants_goods_img` ON `restourants_goods_img`.`id_restourant_goods` = `user_basket`.`id_restourant_goods` AND `user_basket`.`id_user` = '$id_user'");
-        if(mysqli_num_rows($resultUser) == 0){
+        if (mysqli_num_rows($resultBasket) == 0) {
             echo "<div class=\"no-goods\"><h2>Корзина пуста</h2></div>";
-        }else{
-            while($outGoods = mysqli_fetch_assoc($resultBasket)){
+        } else {
+            while ($outGoods = mysqli_fetch_assoc($resultBasket)) {
                 $imgBase64 = base64_encode($outGoods['goods_img']);
                 echo "<div class=\"basket-box\">
                         <div class=\"basket-box__flex-container\">
@@ -137,19 +137,20 @@ if (empty($_COOKIE['loginUser'])) {
                         </div>
                     </div>";
             }
-            
+
             echo "<div class=\"add-aplication\">
                 <form action=\"../php/add_aplication.php\" method=\"post\" id=\"formInputAplication\">
-                <input type=\"hidden\" name=\"id_user\" value=\"$id_user\">";
-                    $aplicationInputRest = $connect->query("SELECT DISTINCT(`user_basket`.`id_restourant`) FROM `user_basket` WHERE `user_basket`.`id_user` = '$id_user'");
-                    while($outRest = mysqli_fetch_assoc($aplicationInputRest)){
-                        echo "<input type=\"hidden\" name=\"id_rest\" value=\"{$outRest['id_restourant']}\">";
-                    }
-                    $aplicationInputResult = $connect->query("SELECT `user_basket`.`id_restourant`, `user_basket`.`id_restourant_goods` FROM `user_basket` WHERE `user_basket`.`id_user` = '$id_user'");
-                    while($out = mysqli_fetch_assoc($aplicationInputResult)){
-                        echo "<input type=\"hidden\" name=\"id_goods[]\" value=\"{$out['id_restourant_goods']}\">";
-                    }
-                
+                <input type=\"hidden\" name=\"id_user\" value=\"$id_user\">
+                <input type=\"hidden\" name=\"total-price\" value=\"\" id=\"inputTotalPrice\">";
+            $aplicationInputRest = $connect->query("SELECT DISTINCT(`user_basket`.`id_restourant`) FROM `user_basket` WHERE `user_basket`.`id_user` = '$id_user'");
+            while ($outRest = mysqli_fetch_assoc($aplicationInputRest)) {
+                echo "<input type=\"hidden\" name=\"id_rest\" value=\"{$outRest['id_restourant']}\">";
+            }
+            $aplicationInputResult = $connect->query("SELECT `user_basket`.`id_restourant`, `user_basket`.`id_restourant_goods` FROM `user_basket` WHERE `user_basket`.`id_user` = '$id_user'");
+            while ($out = mysqli_fetch_assoc($aplicationInputResult)) {
+                echo "<input type=\"hidden\" name=\"id_goods[]\" value=\"{$out['id_restourant_goods']}\">";
+            }
+
             echo "
                 <div class=\"total-price-to-aplication\">
                     <h2 class=\"total-price-to-aplication__h2\">Итоговая стоимость:</h2>
@@ -203,22 +204,23 @@ if (empty($_COOKIE['loginUser'])) {
         //total-price
         const outTotalPrice = document.querySelector('.total-price-to-aplication__h2');
         let totalPrice = 0;
-        document.querySelectorAll('.basket-box__price').forEach((elem)=>{
+        document.querySelectorAll('.basket-box__price').forEach((elem) => {
             totalPrice += parseInt(elem.getAttribute('data-price'));
         });
         console.log(totalPrice);
         outTotalPrice.innerHTML = 'Итоговая стоимость: ' + totalPrice + ' руб.';
         const formInputAplication = document.getElementById('formInputAplication');
-        formInputAplication.addEventListener('submit', (e)=>{
+        document.getElementById('inputTotalPrice').value = totalPrice;
+        formInputAplication.addEventListener('submit', (e) => {
             e.preventDefault();
             const checkAddres = document.getElementById('checkAddres');
-            if(checkAddres.value == ''){
+            if (checkAddres.value == '') {
                 checkAddres.nextElementSibling.innerHTML = 'Поле пусто';
-                checkAddres.addEventListener('keydown', ()=>{
+                checkAddres.addEventListener('keydown', () => {
                     checkAddres.nextElementSibling.innerHTML = '';
                 })
                 console.log('Поле пусто');
-            }else{
+            } else {
                 console.log('Поле не пусто');
                 formInputAplication.submit();
             }

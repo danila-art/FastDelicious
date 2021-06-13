@@ -104,3 +104,7 @@ input[type=submit] {
     padding-bottom: 2%;
     margin: 0 auto;
 }
+
+.aplication-goods__data {
+    width: 60%;
+}

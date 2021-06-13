@@ -2,7 +2,7 @@
 
 @media screen and (max-width: 1366px) {
     input[type=submit] {
-        font-size: 26px;
+        font-size: 18px;
     }
     /* !header */
     .header__nav h2 {
@@ -73,10 +73,10 @@
     }
     /* !main output restaurants */
     .main__restorants-box-name h1 {
-        font-size: 36px;
+        font-size: 30px;
     }
     .main__restorants-box-category h2 {
-        font-size: 22px;
+        font-size: 20px;
     }
     /* !media->user-page */
     .user-data__heading {
@@ -102,6 +102,15 @@
     }
     .box-goods__total-price h2 {
         font-size: 22px;
+    }
+    .my-aplication__heading h2 {
+        font-size: 32px;
+    }
+    .aplication__data h2 {
+        font-size: 20px;
+    }
+    .aplication-goods__data h2 {
+        font-size: 20px;
     }
     /* !page->goods */
     .restaurant-container__name-restaurant h1 {

@@ -216,6 +216,75 @@
                     <h2>Добавить товар</h2>
                 </div>";
         }
+        echo "<div class=\"aplication\">
+                <div class=\"aplication__heading\">
+                    <h2>Заказы</h2>
+                </div>
+                <div class=\"my-aplication__flex-container\">";
+        $aplicationResult = $connect->query("SELECT `aplication`.`id_aplication`, `aplication`.`user_address`, `aplication`.`date`, `aplication`.`time_start`, `aplication`.`price`, `aplication`.`status`, `restourants`.`name`, `restourants_img`.`restaurant_img` FROM `aplication` INNER JOIN `restourants` ON `restourants`.`id_restourant` = `aplication`.`id_restourant` INNER JOIN `restourants_img` ON `restourants_img`.`id_restourant` = `aplication`.`id_restourant` AND `aplication`.`id_restourant` = '$idRest'");
+        if (mysqli_num_rows($aplicationResult) == 0) {
+            echo "<div style=\"padding-top: 5%; padding-bottom: 5%; text-align: center;\"><h2>Заказов пока нет</h2></div>";
+        } else {
+            while ($outAplication = mysqli_fetch_assoc($aplicationResult)) {
+                $base64ImgAplication = base64_encode($outAplication['restaurant_img']);
+                echo "<div class=\"rest-box\">
+                            <div class=\"rest-box-container\">
+                                <div class=\"rest-box__heading\">
+                                    <h1>{$outAplication['name']}</h1>
+                                </div>
+                                <div class=\"rest-box__img\">
+                                    <img src=\"data:image/jpeg;base64,$base64ImgAplication\" alt=\"errorUpImage\">
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Дата:  {$outAplication['date']}</h2>
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Врема заказа:  {$outAplication['time_start']}</h2>
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Цена заказа:  {$outAplication['price']}</h2>
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Адрес доставки:  {$outAplication['user_address']}</h2>
+                                </div>
+                                <div class=\"aplication__data-goods\">
+                                    <h2>Товары:</h2>
+                                </div>
+                    ";
+                $aplicationGoodsResult = $connect->query("SELECT `restourants_goods`.`goods_name`, `restourants_goods`.`goods_category`, `restourants_goods`.`price`, `restourants_goods_img`.`goods_img` FROM `aplication_goods` INNER JOIN `restourants_goods` ON `restourants_goods`.`id_restourant_goods` = `aplication_goods`.`id_restourant_goods` INNER JOIN `restourants_goods_img` ON `restourants_goods_img`.`id_restourant_goods` = `aplication_goods`.`id_restourant_goods` INNER JOIN `aplication` ON `aplication`.`id_aplication` = `aplication_goods`.`id_aplication` AND `aplication_goods`.`id_aplication` = '{$outAplication['id_aplication']}'");
+                while ($outAplicationGoods = mysqli_fetch_assoc($aplicationGoodsResult)) {
+                    $aplicationGoodsImg = base64_encode($outAplicationGoods['goods_img']);
+                    echo "<div class=\"aplication-goods__flex-container\">
+                                <div class=\"aplication-goods__img\">
+                                    <img src=\"data:image/jpeg;base64,$aplicationGoodsImg\">
+                                </div>
+                                <div class=\"aplication-goods__data\">
+                                    <h2>Название: {$outAplicationGoods['goods_name']}</h2>
+                                    <h2>Категория: {$outAplicationGoods['goods_category']}</h2>
+                                    <h2>Цена: {$outAplicationGoods['price']}</h2>
+                                </div>
+                        </div>";
+                }
+                echo "<div class=\"aplication__data-status\">
+                            <h2>Статус:  {$outAplication['status']}</h2>
+                        </div>
+                        <form action=\"../php/update_status.php\" method=\"post\">
+                            <input type=\"hidden\" name=\"id_aplication\" value=\"{$outAplication['id_aplication']}\">
+                            <input type=\"hidden\" name=\"status\" value=\"Заказ принят\">
+                            <input class=\"status-submit\" type=\"submit\" value=\"Заказ принят\">
+                        </fotm>
+                        <form action=\"../php/update_status.php\" method=\"post\">
+                            <input type=\"hidden\" name=\"id_aplication\" value=\"{$outAplication['id_aplication']}\">
+                            <input type=\"hidden\" name=\"status\" value=\"Заказ выполнен\">
+                            <input class=\"status-submit__2\" type=\"submit\" value=\"Заказ выполнен\">
+                        </fotm>
+                    </div>
+                </div>";
+            }
+        }
+
+        echo "</div>
+        </div>";
     } else {
         include 'module_reg_auto_profile.html';
     }

@@ -21,6 +21,7 @@
     height: 60vh;
     margin-top: 15%;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .header__box-restaurants-container {
@@ -30,6 +31,7 @@
     height: 60vh;
     margin-top: 15%;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .header__box-users {

@@ -176,12 +176,12 @@
         </div>
         <div class="header__content">
             <div class="header__flex-box">
-                <div class="header__box-users-container">
+                <div class="header__box-users-container" id="buttonGoUser">
                     <div class="header__box-users">
                         <h2>Пользователям</h2>
                     </div>
                 </div>
-                <div class="header__box-restaurants-container">
+                <div class="header__box-restaurants-container" id="buttonGoRest">
                     <div class="header__box-restaurants">
                         <h2>Ресторанам</h2>
                     </div>
@@ -209,7 +209,7 @@
         </div>
 
     </section>
-    <section class="users">
+    <section class="users" id="goUser">
         <div class="users__heading">
             <h1>Для пользователей</h1>
         </div>
@@ -218,7 +218,7 @@
                 сделайте заказ и ожидайте. Заказ будет доставлен от 40 минут, но не более.</h2>
         </div>
     </section>
-    <section class="restaurants">
+    <section class="restaurants" id="goRetourans">
         <div class="restaurants__heading">
             <h1>Для ресторанов</h1>
         </div>
@@ -285,6 +285,17 @@
                 blockModuleAutorization.style.display = 'block';
             }
         });
+        // location
+        const buttonGoUser = document.getElementById('buttonGoUser');
+        const buttonGoRest = document.getElementById('buttonGoRest');
+        const goUser = document.getElementById('goUser');
+        const goRetourans = document.getElementById('goRetourans');
+        buttonGoUser.addEventListener('click', () => {
+            window.location.href = '#goUser';
+        })
+        buttonGoRest.addEventListener('click', () => {
+            window.location.href = '#goRetourans';
+        })
     </script>
     <script src="../js/script_registr_autorization.js"></script>
 </body>

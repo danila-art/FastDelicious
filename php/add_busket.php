@@ -29,8 +29,6 @@ if ($goodsCheck != null && $id_rest != null) {
             $outRestBusket = $row['id_restourant'];
         }
         if ($outRestBusket != $id_rest) {
-            echo $outRestBusket;
-            echo $id_rest;
             $connect->query("DELETE FROM `user_basket` WHERE `id_user` = '$id_user'");
             foreach ($goodsCheck as $value) {
                 $connect->query("INSERT INTO `user_basket`(`id_user`, `id_restourant`, `id_restourant_goods`) VALUES ('$id_user','$id_rest','$value')");
@@ -50,5 +48,6 @@ if ($goodsCheck != null && $id_rest != null) {
         foreach ($goodsCheck as $value) {
             $connect->query("INSERT INTO `user_basket`(`id_user`, `id_restourant`, `id_restourant_goods`) VALUES ('$id_user','$id_rest','$value')");
         }
+        header('Location: ../page/user_basket.php');
     }
 }

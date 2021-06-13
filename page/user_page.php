@@ -235,7 +235,61 @@ if (empty($_COOKIE['loginUser'])) {
         <div class="my-aplication__heading">
             <h2>Мои заказы</h2>
         </div>
-        
+        <div class="my-aplication__flex-container">
+            <?php
+            $aplicationResult = $connect->query("SELECT `aplication`.`id_aplication`, `aplication`.`user_address`, `aplication`.`date`, `aplication`.`time_start`, `aplication`.`price`, `aplication`.`status`, `restourants`.`name`, `restourants_img`.`restaurant_img` FROM `aplication` INNER JOIN `restourants` ON `restourants`.`id_restourant` = `aplication`.`id_restourant` INNER JOIN `restourants_img` ON `restourants_img`.`id_restourant` = `aplication`.`id_restourant` AND `aplication`.`id_user` = '$id_user'");
+            if (mysqli_num_rows($aplicationResult) == 0) {
+                echo "<div style=\"padding-top: 5%; padding-bottom: 5%; text-align: center;\"><h2>Заказов пока нет</h2></div>";
+            } else {
+                while ($outAplication = mysqli_fetch_assoc($aplicationResult)) {
+                    $base64ImgAplication = base64_encode($outAplication['restaurant_img']);
+                    echo "<div class=\"rest-box\">
+                            <div class=\"rest-box-container\">
+                                <div class=\"rest-box__heading\">
+                                    <h1>{$outAplication['name']}</h1>
+                                </div>
+                                <div class=\"rest-box__img\">
+                                    <img src=\"data:image/jpeg;base64,$base64ImgAplication\" alt=\"errorUpImage\">
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Дата:  {$outAplication['date']}</h2>
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Врема заказа:  {$outAplication['time_start']}</h2>
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Цена заказа:  {$outAplication['price']}</h2>
+                                </div>
+                                <div class=\"aplication__data\">
+                                    <h2>Адрес доставки:  {$outAplication['user_address']}</h2>
+                                </div>
+                                <div class=\"aplication__data-goods\">
+                                    <h2>Товары:</h2>
+                                </div>
+                    ";
+                    $aplicationGoodsResult=$connect->query("SELECT `restourants_goods`.`goods_name`, `restourants_goods`.`goods_category`, `restourants_goods`.`price`, `restourants_goods_img`.`goods_img` FROM `aplication_goods` INNER JOIN `restourants_goods` ON `restourants_goods`.`id_restourant_goods` = `aplication_goods`.`id_restourant_goods` INNER JOIN `restourants_goods_img` ON `restourants_goods_img`.`id_restourant_goods` = `aplication_goods`.`id_restourant_goods` INNER JOIN `aplication` ON `aplication`.`id_aplication` = `aplication_goods`.`id_aplication` AND `aplication_goods`.`id_aplication` = '{$outAplication['id_aplication']}'");
+                    while($outAplicationGoods = mysqli_fetch_assoc($aplicationGoodsResult)){
+                        $aplicationGoodsImg = base64_encode($outAplicationGoods['goods_img']);
+                        echo "<div class=\"aplication-goods__flex-container\">
+                                <div class=\"aplication-goods__img\">
+                                    <img src=\"data:image/jpeg;base64,$aplicationGoodsImg\">
+                                </div>
+                                <div class=\"aplication-goods__data\">
+                                    <h2>Название: {$outAplicationGoods['goods_name']}</h2>
+                                    <h2>Категория: {$outAplicationGoods['goods_category']}</h2>
+                                    <h2>Цена: {$outAplicationGoods['price']}</h2>
+                                </div>
+                        </div>";
+                    }
+                    echo "<div class=\"aplication__data-status\">
+                            <h2>Статус:  {$outAplication['status']}</h2>
+                    </div>
+                    </div>
+                        </div>";
+                }
+            }
+            ?>
+        </div>
     </section>
     <footer class="footer">
         <div class="footer__logo">
@@ -300,25 +354,6 @@ if (empty($_COOKIE['loginUser'])) {
                 formAddUserImg.submit();
             }
         });
-        // total price
-
-        // <div class = \"box-goods__total-price\"> 
-        //     <h2 class = \"box-goods__total-price-h2\">Итоговая стоимость: </h2> 
-        //     <input class = \"total-price\" type=\"hidden\" name=\"total_price\" value=\"\"> 
-        //     </div>
-        // const boxCollection = document.querySelectorAll('.rest-box');
-        // boxCollection.forEach((elem) => {
-        //     let totalPrice = 0;
-        //     const priceCollection = elem.querySelectorAll('.box-goods__price');
-        //     priceCollection.forEach((price) => {
-        //         totalPrice += parseInt(price.getAttribute('data-price'));
-        //     });
-        //     console.log(totalPrice);
-        //     elem.querySelector('.box-goods__total-price-h2').innerHTML = 'Итоговая стоимость: ' + totalPrice + ' руб.';
-        //     elem.querySelector('.total-price').value = totalPrice;
-        // });
-
-        // go to basket
         const buttonBasket = document.querySelector('.header__basket');
         buttonBasket.addEventListener('click', () => {
             if (document.getElementById('clickUserPage') != null) {
@@ -331,8 +366,8 @@ if (empty($_COOKIE['loginUser'])) {
 
         // form delete-rest
         const formDeleteRestBox = document.querySelectorAll('.form-delete-rest-box');
-        formDeleteRestBox.forEach((elem)=>{
-            elem.querySelector('.img-delete-icon').addEventListener('click', ()=>{
+        formDeleteRestBox.forEach((elem) => {
+            elem.querySelector('.img-delete-icon').addEventListener('click', () => {
                 elem.submit();
             });
         });

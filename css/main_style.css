@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -28,8 +32,8 @@ a {
 /* font */
 
 @font-face {
-    font-family: 'Daray';
-    src: url('../font/Daray.otf');
+    font-family: 'h2_font';
+    src: url('../font/h2_font.ttf');
 }
 
 @font-face {
@@ -42,7 +46,7 @@ h1 {
 }
 
 h2, h3, h4, input[type=submit] {
-    font-family: Daray;
+    font-family: h2_font;
 }
 
 .header {
