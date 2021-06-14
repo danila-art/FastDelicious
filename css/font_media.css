@@ -1,4 +1,141 @@
-@media screen and (max-width: 1920px) {}
+@media screen and (max-width: 1920px) {
+    input[type=submit] {
+        font-size: 22px;
+    }
+    /* !header */
+    .header__nav h2 {
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .header__heading {
+        font-size: 30px;
+    }
+    .header__h2 h2 {
+        font-size: 30px;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+    /* !font media contact */
+    .contacts__box-inner h2:nth-child(1) {
+        font-size: 32px;
+    }
+    .contacts__box-inner h2:nth-child(2), .contacts__box-inner h2:nth-child(3) {
+        font-size: 28px;
+    }
+    /* !footer */
+    .footer__heading h1 {
+        font-size: 52px;
+        font-weight: 400;
+    }
+    .footer__flex h2 {
+        font-size: 30px;
+        font-weight: 400;
+    }
+    /* !media restourant*/
+    .main__form-heading h2 {
+        font-size: 36px;
+        font-weight: 600;
+    }
+    .main__form-input h3 {
+        font-size: 28px;
+    }
+    .main__form-input-file h3 {
+        font-size: 28px;
+    }
+    /* !font media about */
+    .header__box-users h2 {
+        font-size: 40px;
+    }
+    .header__box-restaurants h2 {
+        font-size: 40px;
+    }
+    .about__heading h1 {
+        font-size: 46px;
+    }
+    .about__box h2 {
+        font-size: 32px;
+    }
+    .users__heading h1 {
+        font-size: 46px;
+    }
+    .restaurants__heading h1 {
+        font-size: 46px;
+    }
+    .users__text-box h2 {
+        font-size: 34px;
+        line-height: 42px;
+    }
+    .restaurants__text h2 {
+        font-size: 34px;
+        line-height: 42px;
+    }
+    /* !main output restaurants */
+    .main__restorants-box-name h1 {
+        font-size: 34px;
+    }
+    .main__restorants-box-category h2 {
+        font-size: 24px;
+    }
+    /* !media->user-page */
+    .user-data__heading {
+        font-size: 32px;
+    }
+    .user-data__data-box h2:nth-child(1) {
+        font-size: 28px;
+    }
+    .user-data__data-box h2:nth-child(2) {
+        font-size: 30px;
+    }
+    .user-box__heading h2 {
+        font-size: 36px;
+    }
+    .rest-box__heading h1 {
+        font-size: 46px;
+    }
+    .box-goods__heading h1 {
+        font-size: 30px;
+    }
+    .box-goods__price h2 {
+        font-size: 26px;
+    }
+    .box-goods__total-price h2 {
+        font-size: 26px;
+    }
+    .my-aplication__heading h2 {
+        font-size: 36px;
+    }
+    .aplication__data h2 {
+        font-size: 24px;
+    }
+    .aplication-goods__data h2 {
+        font-size: 24px;
+    }
+    /* !page->goods */
+    .restaurant-container__name-restaurant h1 {
+        font-size: 52px;
+    }
+    .restaurant-container__description h2 {
+        font-size: 34px;
+    }
+    .restaurant-container__category h2 {
+        font-size: 32px;
+    }
+    .goods__heading h1 {
+        font-size: 46px;
+    }
+    .goods_description h2 {
+        font-size: 26px;
+    }
+    .goods__category h2 {
+        font-size: 22px;
+    }
+    .goods__price h2 {
+        font-size: 26px;
+    }
+    .main__h2 h2 {
+        font-size: 26px;
+    }
+}
 
 @media screen and (max-width: 1366px) {
     input[type=submit] {
@@ -132,6 +269,9 @@
         font-size: 18px;
     }
     .goods__price h2 {
+        font-size: 22px;
+    }
+    .main__h2 h2 {
         font-size: 22px;
     }
 }

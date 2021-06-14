@@ -278,9 +278,9 @@ if ($id_rest != null) {
             <h1>О компании</h1>
         </div>
         <div class="footer__flex">
-            <h2>О нас</h2>
+            <h2><a href="about.php">О нас</a></h2>
             <h2>Условия полиики и конфедициальности</h2>
-            <h2>Контакты</h2>
+            <h2 id="buttonContactFooter">Контакты</h2>
         </div>
     </footer>
     <script>
@@ -288,6 +288,17 @@ if ($id_rest != null) {
         const buttonContact = document.getElementById('buttonContact');
         const closeContactBlock = contactsBlock.querySelector('.contacts__close');
         buttonContact.addEventListener('click', () => {
+            if (getComputedStyle(contactsBlock).display == 'none') {
+                contactsBlock.style.display = 'block';
+                closeContactBlock.addEventListener('click', () => {
+                    if (getComputedStyle(contactsBlock).display == 'block') {
+                        contactsBlock.style.display = 'none';
+                    }
+                });
+            }
+        });
+        const buttonContactFooter = document.getElementById('buttonContactFooter');
+        buttonContactFooter.addEventListener('click', () => {
             if (getComputedStyle(contactsBlock).display == 'none') {
                 contactsBlock.style.display = 'block';
                 closeContactBlock.addEventListener('click', () => {
