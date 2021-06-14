@@ -94,7 +94,7 @@
                     <h2><a href="../">Главная</a></h2>
                     <h2><a href="restaurants.php">Ресторанам</a></h2>
                     <h2><a href="about.php">О нас</a></h2>
-                    <h2><a href="">Контакты</a></h2>
+                    <h2 id="buttonContact">Контакты</h2>
                 </div>
                 <?php
                 $cookieLoginRest = $_COOKIE['loginRest'];
@@ -272,12 +272,12 @@
                             <input type=\"hidden\" name=\"id_aplication\" value=\"{$outAplication['id_aplication']}\">
                             <input type=\"hidden\" name=\"status\" value=\"Заказ принят\">
                             <input class=\"status-submit\" type=\"submit\" value=\"Заказ принят\">
-                        </fotm>
+                        </form>
                         <form action=\"../php/update_status.php\" method=\"post\">
                             <input type=\"hidden\" name=\"id_aplication\" value=\"{$outAplication['id_aplication']}\">
                             <input type=\"hidden\" name=\"status\" value=\"Заказ выполнен\">
                             <input class=\"status-submit__2\" type=\"submit\" value=\"Заказ выполнен\">
-                        </fotm>
+                        </form>
                     </div>
                 </div>";
             }
@@ -303,6 +303,21 @@
             <h2>Контакты</h2>
         </div>
     </footer>
+    <script>
+        const contactsBlock = document.getElementById('contactsBlock');
+        const buttonContact = document.getElementById('buttonContact');
+        const closeContactBlock = contactsBlock.querySelector('.contacts__close');
+        buttonContact.addEventListener('click', () => {
+            if (getComputedStyle(contactsBlock).display == 'none') {
+                contactsBlock.style.display = 'block';
+                closeContactBlock.addEventListener('click', () => {
+                    if (getComputedStyle(contactsBlock).display == 'block') {
+                        contactsBlock.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
     <?php
     if (!empty($_COOKIE['loginRest'])) {
         echo "<script src =\"../js/script_rest_profile.js\"></script>";
